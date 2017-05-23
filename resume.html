@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Resume</title>
+		<script type="text/javascript">
+			var xhttp = new XMLHttpRequest();
+		  	xhttp.onreadystatechange = function() {
+			  	if (this.readyState == 4 && this.status == 200) {
+			  		var json = JSON.parse(this.responseText);
+					document.getElementById("name").innerHTML = json.results[0].name.first.toUpperCase() + " " + json.results[0].name.last.toUpperCase();
+					document.getElementById("email").innerHTML = json.results[0].email;
+					document.getElementById("myimage").innerHTML = '<img src="' + json.results[0].picture.large + '"/>'
+			    }
+			};
+
+			xhttp.open("GET", "https://www.randomuser.me/api", true);
+			xhttp.send();
+		</script>
+	</head>
+	<body>
+		<h1>About Me</h1>
+		<div id="myimage"> </div>
+		<p>My name is <span id="name"> </span></p>
+		<p>Email: <span id="email"></span></p>
+		<hr>
+		<h2>Experience</h3>
+	</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Multiple Values</title>
+	</head>
+	<body>
+	<script type="text/javascript">
+		function Hotel(name, rooms, booked) { 
+			this.name = name; 
+			this.rooms = rooms; 
+			this.booked = booked; 
+			this.checkAvailability = function() { 
+				return this.rooms - this.booked; 
+			};
+
+			function f() { 
+				this.name = "abc";
+			}
+		}
+
+		var h = new Hotel("Hilton", 50, 10);
+		var h2 = new Hotel("Cititel", 30, 5);
+		console.log(h);
+		console.log("Hotel: " + h.name + 
+			", available rooms: " + h.checkAvailability());
+	</script>
+
+	</body>
+</html>
