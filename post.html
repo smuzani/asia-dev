@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>POST</title>
+	</head>
+	<body>
+	<div id="sample">
+	  <button type="button" onclick="post()">Post</button>
+	</div>
+	<script type="text/javascript">
+		function post() {  
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				// Ready state -> Document is completely downloaded
+			  	// status 200 -> Correct
+			  	if (this.readyState == 4 && this.status == 201) {
+			      // document.getElementById("sample").innerHTML = this.responseText;
+			      alert("Successful");
+			    }
+			};
+			var body = '{"firstName": "First", "lastName": "Last", "email": "email@example.com"}'
+
+			xhttp.open("POST", "https://sheetsu.com/apis/v1.0/97db6e1f340f", true);
+			xhttp.setRequestHeader("Content-type", "application/json")
+			xhttp.send(body);
+		}
+	</script>
+
+	</body>
+</html>

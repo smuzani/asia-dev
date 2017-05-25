@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>GET challenge</title>
+		<script type="text/javascript">
+			var xhttp = new XMLHttpRequest();
+		  	xhttp.onreadystatechange = function() {
+			  	if (this.readyState == 4 && this.status == 200) {
+			  		var json = JSON.parse(this.responseText);
+			  		for (i=0; i < json.length; i++){
+					document.getElementById("usertable").innerHTML += "<tr><td>" + json[i].firstName + " " + json[i].lastName + "</td><td>" + json[i].email + "</td></tr>";
+					}
+			    }
+			};
+
+			xhttp.open("GET", "https://sheetsu.com/apis/v1.0/97db6e1f340f", true);
+			xhttp.send();
+		</script>
+	</head>
+	<body>
+		<table border="1" id="usertable">
+		<tr><th>Name</th><th>Email</th></tr>
+
+		</table>
+	</body>
+</html>
