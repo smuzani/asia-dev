@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>jQuery</title>
+		<script src="js/jquery-3.2.1.min.js"></script>
+		<style type="text/css">
+			.selected{
+				color: green;
+			}
+
+			.tabs {    width:100%;    display:inline-block; }
+.tab-links li {    margin:0px 5px;    float:left;    list-style:none; }
+
+.tab-links a {
+        padding:9px 15px;
+        display:inline-block;
+        border-radius:3px 3px 0px 0px;
+        background:#7FB5DA;
+        font-size:16px;
+        font-weight:600;
+        color:#4c4c4c;
+        transition:all linear 0.15s;
+    } 
+
+    .tab-links a:hover {
+        background:#a7cce5;
+        text-decoration:none;
+    } 
+li.active a, li.active a:hover {
+    background:#fff;
+    color:#4c4c4c;
+}
+
+.tab-content {    padding:15px;    border-radius:3px;    box-shadow:-1px 1px 1px rgba(0,0,0,0.15);    background:#fff; }
+/*.tab {    display:none; } */
+.tab.active {    display:block; }
+.tab-links:after {        display:block;        clear:both;        content:'';    }
+
+		</style>
+		<script type="text/javascript">
+
+		// function show(element) {
+		// 	$('.tabs ' + currentAttrValue).show().siblings().hide();   
+		// 	$(this).parent('li').addClass('active').siblings().removeClass('active');
+		// }
+		</script>
+	</head>
+	<body>
+
+	<script type="text/javascript">
+		//  $(document).ready(function() {             
+		//  	$('.tab').click(function() {
+		// 	(this).slideUp();
+		// 	var attr = (this).attr();
+		// 	console.log(attr)
+		// });
+		//  });
+	</script>
+
+		<div class="tabs tab">    
+			<ul class="tab-links">        
+				<li class="active"><a href="#tab1">Tab #1</a></li>        
+				<li><a href="#tab2">Tab #2</a></li>
+				<li><a href="#tab3">Tab #3</a></li>        
+				<li><a href="#tab4">Tab #4</a></li>    
+			</ul> 
+		</div>
+
+		<div class="tab-content">
+		        <div id="tab1" class="tab active">
+		                    <p>Tab #1 content goes here!</p>            <p>Lorem ipsum text….</p>        
+  				</div>  
+  				<div id="tab2" class="tab">            <p>Tab #2 content goes here!</p>            <p>Lorem ipsum textt….</p>        
+  				</div> 
+  				<div id="tab3" class="tab">            <p>Tab #3 content goes here!</p>            <p>Lorem ipsum textt….</p>        
+  				</div>         
+  				<div id="tab4" class="tab">            <p>Tab #4 content goes here!</p>            <p>Lorem ipsum textt….</p>        
+  			</div>    
+  		</div>
+	</body>
+</html>

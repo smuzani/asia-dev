@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Geolocation</title>
+	<script type="text/javascript">
+		function getLocation() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition( function (position) {
+					// alert("Lat: " + position.coords.latitude + " Long: " + position.coords.longitude);
+					return [position.coords.latitude, position.coords.longitude]
+				});
+			}
+		}
+
+		function haversine(lat1, lon1, lat2, lon2) {
+			var R = 6371; // km
+			var dLat = (lat2-lat1).toRad();
+			var dLon = (lon2-lon1).toRad();
+			var lat1 = lat1.toRad();
+			var lat2 = lat2.toRad();
+
+			var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+			        Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+			var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+			var d = R * c; // Kilometers
+			var rounded = roundVal(d);
+
+			return rounded;
+		}
+
+		// Converts numeric degrees to radians
+		if (typeof Number.prototype.toRad == 'undefined') {
+		  Number.prototype.toRad = function() {
+		    return this * Math.PI / 180;
+		  }
+		}
+
+		function roundVal(val) {
+			var dec = 2;
+			var result = Math.round(val*Math.pow(10,dec)/Math.pow(10,dec));
+			return result;
+		}
+
+		function findDistance(lat, lon) {
+			var d1 = haversine(lat, lon, 2.922561, 101.650964);
+			var d2 = haversine(lat, lon, 3.073065, 101.607787);
+			var d3 = haversine(lat, lon, 3.158761, 101.714524);
+
+			console.log("DPulze: " + d1 + "km");
+			console.log("Sunway Pyramid: " + d2 + "km");
+			console.log("KLCC: " + d3 + "km");
+		}
+
+		window.onload = function () {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition( function (position) {
+					// alert("Lat: " + position.coords.latitude + " Long: " + position.coords.longitude);
+					var lat = position.coords.latitude;
+					var lng = position.coords.longitude
+					console.log (lat + ", " + lng);
+					findDistance(lat, lng);
+				});
+			} else {
+				alert("Unable to retrieve location")
+			}
+		}
+
+	</script>
+</head>
+<body>
+	</body>
+</html>

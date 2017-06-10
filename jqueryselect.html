@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>jQuery</title>
+		<script src="js/jquery-3.2.1.min.js"></script>
+		<style type="text/css">
+			.selected{
+				color: green;
+			}
+
+		</style>
+	</head>
+	<body>
+
+	<script type="text/javascript">
+		 $(document).ready(function() {             $("li").filter(".middle").addClass("selected");         });
+	</script>
+
+		<div>         <ul>            <li class = "top">list item 1</li>            <li class = "top">list item 2</li>            <li class = "middle">list item 3</li>            <li class = "middle">list item 4</li>            <li class = "bottom">list item 5</li>            <li class = "bottom">list item 6</li>         </ul>      </div>
+	</body>
+</html>
