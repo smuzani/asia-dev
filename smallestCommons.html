@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Smallest Common Multiple</title>
+</head>
+<body>
+<script type="text/javascript">
+	function isDivisible(array, number) {
+		for (var i = array.length - 1; i >= 0; i--) {
+			if (number % array[i] != 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	function findLcm(numbers) {
+		var lcm = 0;
+		while (true) {
+			lcm++;
+			if (isDivisible(numbers, lcm)) {
+				break;
+			}
+		}
+		return lcm;
+	}
+
+	function smallestCommons(range) {
+		range = range.sort(); // sorts, so that [23, 18] becomes [18, 23]
+		var min = range[0];
+		var max = range[1];
+		var numbers = [];
+		for (i = min; i <= max; i++) {
+			numbers.push(i);
+		}
+		return findLcm(numbers);
+	}
+</script>
+</body>
+</html>
