@@ -74,11 +74,45 @@ var os = require('os');
 
 var controller = Botkit.slackbot({
     debug: true,
+    json_file_store: 'db/'
 });
 
 var bot = controller.spawn({
     token: process.env.token
 }).startRTM();
+
+var RecastaiMiddleware = require('botkit-middleware-recastai')({
+        request_token: 'b9a272a07979720c74ae406947dc92c8',
+        confidence: 0.4
+});
+
+controller.middleware.receive.use(RecastaiMiddleware.receive);
+
+controller.hears(['insult'],'message_received', RecastaiMiddleware.hears,function(bot, message) {
+    bot.reply(message, "ok");
+});
+
+controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', function(bot, message) {
+
+    bot.api.reactions.add({
+        timestamp: message.ts,
+        channel: message.channel,
+        name: 'robot_face',
+    }, function(err, res) {
+        if (err) {
+            bot.botkit.log('Failed to add emoji reaction :(', err);
+        }
+    });
+
+
+    controller.storage.users.get(message.user, function(err, user) {
+        if (user && user.name) {
+            bot.reply(message, 'Hello ' + user.name + '!!');
+        } else {
+            bot.reply(message, 'Hello.');
+        }
+    });
+});
 
 controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', function(bot, message) {
 
@@ -243,3 +277,43 @@ function formatUptime(uptime) {
     uptime = uptime + ' ' + unit;
     return uptime;
 }
+
+controller.hears(['trip'], 'direct_message,direct_mention,mention', function(bot, message) {
+    bot.startConversation(message, function(err, convo) {
+        if (!err) {
+            convo.setTimeout(60000);
+            convo.onTimeout(function(convo) {
+              convo.stop();
+            });
+
+            convo.ask('Where would you like to go?', function(response, convo) {
+                convo.next();
+            }, {'key': 'destination'}); // store the results in a field called nickname
+
+            convo.ask('How long would you like to go?', function(response, convo) {
+                convo.next();
+            }, {'key': 'time'}); // store the results 
+
+            convo.on('end', function(convo) {
+                if (convo.status == 'completed') {
+
+                    controller.storage.users.get(message.user, function(err, user) {
+                        if (!user) {
+                            user = {
+                                id: message.user,
+                            };
+                        }
+                        user.dest = convo.extractResponse('destination');
+                        user.time = convo.extractResponse('time');
+                        controller.storage.users.save(user, function(err, id) {
+                            bot.reply(message, 'Got it. You want to go to ' + user.dest + " for " + user.time);
+                        });
+                    });
+                } else {
+                    // this happens if the conversation ended prematurely for some reason
+                    bot.reply(message, 'OK, nevermind!');
+                }
+            });
+        }
+    });
+});
