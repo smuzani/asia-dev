@@ -1,8 +1,8 @@
 var express = require('express');
 var app = express();
 
-app.get("/", function (req, res) {
-	res.send("Hello world!");
-});
+var api = require('./api.js');
+
+app.use('/api', api);
 
 app.listen(3000);
