@@ -2,14 +2,14 @@ var mongoose = require('mongoose');
 var express = require('express');
 var router = express.Router();
 var books  = [
-    {id: 1, title: "The Hitchhiker's Guide to the Galaxy", author: "Douglas Adams", year: 1981, pages: 224},
+    {"id": 1, "title": "The Hitchhiker's Guide to the Galaxy", "author": "Douglas Adams", "year": 1981, "pages": 224},
     {id: 2, "title": "The Hobbit", "author": "J.R.R Tolkien", "year": 1937, "pages": 72},
     {id: 3, "title": "The Lovely Bones", "author": "Alice Sebold", "year": 2002, "pages": 328},
     {"id": 4, "title": "Dracula", "author": "Bram Stroker", "year": 1897, "pages": 448}
 ];
 
 mongoose.connect('mongodb://muzani:mypass@ds153682.mlab.com:53682/books');
-var Book = require('./models/book.js');
+var Book = require('../models/book.js');
 
 router.get('/', function(req, res){
     Book.find(function(err, books) {
@@ -31,9 +31,9 @@ router.post('/', function(req, res){
     if(!req.body.title ||      
     !req.body.author ||
     !req.body.year.toString().match(/^[0-9]{4}$/g) ||      
-    !req.body.pages.toString().match(/^[0-9]{1,}$/g)){            
+    !req.body.pages){            
         res.status(400);      
-        res.json({message: "Bad Request"});   
+        res.json({errors: "Bad Request"});   
     } else {      
         var book = new Book();
         book.title = req.body.title;
@@ -42,7 +42,7 @@ router.post('/', function(req, res){
         book.pages = req.body.pages;
         book.save(function(err) {
             if (err)
-                res.send(err);
+                res.json({error: err});
             res.json({ message: 'Book created!' });
         });
     } 
