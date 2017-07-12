@@ -4,14 +4,6 @@ var chaiHttp = require('chai-http');
 var should = chai.should();
 var server = require('../index.js');
 
-describe('Array', function() {
-  describe('#indexOf()', function() {
-    it('should return -1 when the value is not present', function() {
-      assert.equal(-1, [1,2,3].indexOf(4));
-    });
-  });
-});
-
 chai.use(chaiHttp);
 describe('/GET book', function(){
     it('it should GET all the books', function(done){
@@ -27,23 +19,23 @@ describe('/GET book', function(){
 });
 
 
-describe('/POST book', () => {
-      it('it should not POST a book without pages field', (done) => {
-        let book = {
-            title: "The Lord of the Rings",
-            author: "J.R.R. Tolkien",
-            year: 1954
-        }
-        chai.request(server)
-        .post('/books')
-        .send(book)
-        .end((err, res) => {
-            res.should.have.status(400);
-            res.body.should.be.a('object');
-            res.body.should.have.property('errors');
-        done();
-        });
-    });
-});
+// describe('/POST book', () => {
+//       it('it should not POST a book without pages field', (done) => {
+//         let book = {
+//             title: "The Lord of the Rings",
+//             author: "J.R.R. Tolkien",
+//             year: 1954
+//         }
+//         chai.request(server)
+//         .post('/books')
+//         .send(book)
+//         .end((err, res) => {
+//             res.should.have.status(400);
+//             res.body.should.be.a('object');
+//             res.body.should.have.property('errors');
+//         done();
+//         });
+//     });
+// });
 
 
