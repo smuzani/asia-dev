@@ -10,7 +10,14 @@ router.post('/register', function(req, res){
         res.status(400);      
         res.json({errors: "Bad Request"});   
     } else {      
-        res.json({message: "Registered as " + req.body.username})
+        var user = new User();
+        user.username = req.body.username;
+        user.password = req.body.password;
+        user.save(function(err) {
+            if (err)
+                res.json({error: err});
+            res.json({message: "Registered as " + req.body.username})
+        });
     } 
 });
 
@@ -23,5 +30,7 @@ router.post('/login', function(req, res){
         res.json({message: "Logged in as " + req.body.username})
     } 
 });
+
+
 
 module.exports = router;
