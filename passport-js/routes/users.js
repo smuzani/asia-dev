@@ -27,7 +27,20 @@ router.post('/login', function(req, res){
         res.status(400);      
         res.json({errors: "Bad Request"});   
     } else {      
-        res.json({message: "Logged in as " + req.body.username})
+        User.findOne({ username: req.body.username }, function(err, user) {
+            if (err) throw err;
+
+            // test a matching password
+            user.verifyPassword(req.body.password, function(err, isMatch) {
+                if (err) throw err;
+                console.log('Password123:', isMatch); // -> Password123: true
+                if (isMatch) {
+                    res.json({message: "Logged in as " + req.body.username});
+                } else {
+                    res.json({message: "Invalid username/password"});
+                }
+            });
+        });
     } 
 });
 
