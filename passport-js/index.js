@@ -12,8 +12,8 @@ app.use(passport.initialize())
 var users = require('./routes/users.js');
 app.use('/user', users);
 
-app.route('/new').post(authController.isAuthenticated, function() {
-    res.json({message: "Successfully auth"})
+app.route('/').get(authController.isAuthenticated, function(req, res) {
+    res.json({message: "Successfully authenticated"})
 })
 
 app.listen(3000);
