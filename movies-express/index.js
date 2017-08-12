@@ -10,8 +10,9 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(upload.array());
+app.use(express.static('public'));
 
-var movies = require('./movies.js');
+var movies = require('./controllers/movies.js');
 app.use('/movies', movies);
 
 app.listen(3000);
