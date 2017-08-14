@@ -33,7 +33,7 @@ router.post('/login', function(req, res){
             // test a matching password
             user.verifyPassword(req.body.password, function(err, isMatch) {
                 if (err) throw err;
-                console.log('Password123:', isMatch); // -> Password123: true
+                console.log('Password:', isMatch); // -> Password123: true
                 if (isMatch) {
                     res.json({message: "Logged in as " + req.body.username});
                 } else {
